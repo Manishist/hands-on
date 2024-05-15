@@ -1,25 +1,28 @@
-import logo from './logo.svg';
+
 import './App.css';
+import { useState } from "react"
+import Input from './components/Input';
+import TodoList from './components/TodoList';
+import CompletedTodo from './components/CompletedTodo';
 
 function App() {
+
+  const [tasks, setTasks] = useState([])
+  const [tasksFinished, setTasksFinished] = useState([])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{position: "absolute", right: "50%", marginTop: "30px"}}>
+      <div style={{marginTop: "30px"}}>      
+        <Input tasks={tasks} setTasks={setTasks}/>
+      </div>
+      <div style={{marginTop: "30px"}}>      
+        <TodoList tasks={tasks} setTasks={setTasks} setTasksFinished={setTasksFinished} tasksFinished={tasksFinished}/>
+      </div>
+      <div style={{marginTop: "30px"}}>      
+        <CompletedTodo tasks={tasks} setTasks={setTasks} tasksFinished={tasksFinished} setTasksFinished={setTasksFinished}/>
+      </div>
     </div>
-  );
+  )
 }
 
 export default App;
