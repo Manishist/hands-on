@@ -9,11 +9,18 @@ function App() {
 
   const [tasks, setTasks] = useState([])
   const [tasksFinished, setTasksFinished] = useState([])
+  const [todoItem, setTodoItem] = useState("")
+
+  const AddTodo = () => {
+    setTasks([...tasks, {label: todoItem, checked: false, edit: false}]);
+    setTodoItem("");
+}
 
   return (
     <div style={{position: "absolute", right: "50%", marginTop: "30px"}}>
       <div style={{marginTop: "30px"}}>      
-        <Input tasks={tasks} setTasks={setTasks}/>
+        <Input tasks={tasks} setTasks={setTasks} todoItem={todoItem} setTodoItem={setTodoItem}/>
+        <button onClick={AddTodo}>Add</button>
       </div>
       <div style={{marginTop: "30px"}}>      
         <TodoList tasks={tasks} setTasks={setTasks} setTasksFinished={setTasksFinished} tasksFinished={tasksFinished}/>

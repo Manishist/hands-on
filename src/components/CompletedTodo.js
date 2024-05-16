@@ -1,10 +1,9 @@
 const CompletedTodo = ({tasksFinished, setTasks, tasks}) => {
 
     const undoTask = (index) => {
-        setTasks([...tasks, {label: tasksFinished[index], checked: false}])
+        setTasks([...tasks, {label: tasksFinished[index], checked: false, edit: false}])
         tasksFinished.splice(index, 1)
     }
-    // component is rendering on each CTA
 
     return (
         <div>

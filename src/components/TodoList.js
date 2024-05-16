@@ -2,6 +2,7 @@ import { useState } from "react";
 
 const TodoList = ({tasks, setTasks, setTasksFinished, tasksFinished}) => {
     const [tempCompArr, setTempCompArr] = useState([])
+    const [todoItemNew, setTodoItemNew] = useState("")
 
     const handleCheckTask = (index) => {
         // this was showing error - direct change in array
@@ -20,6 +21,20 @@ const TodoList = ({tasks, setTasks, setTasksFinished, tasksFinished}) => {
     const deleteTask = (index) => {
         setTasks(tasks.filter(item => item.label !== tasks[index].label))
     }
+    const editTask = (index) => {
+        const editedTasks = [...tasks];
+        editedTasks[index].edit = true;
+        tasks = editedTasks
+        setTasks(editedTasks);
+    }
+    const editTaskClick = (index) => {
+        const editedTasks = [...tasks];
+        editedTasks[index].label = todoItemNew;
+        editedTasks[index].edit = false;
+        tasks = editedTasks
+        setTasks(editedTasks);
+        setTodoItemNew("")
+    }
     const moveTasksToDone = () => {
         setTasksFinished([...tasksFinished, ...tempCompArr])
         setTasks(tasks.filter(item => !tempCompArr.includes(item.label)));
@@ -33,9 +48,14 @@ const TodoList = ({tasks, setTasks, setTasksFinished, tasksFinished}) => {
             <div>{tasks.map((eachTodo, index) => {
                 return (
                     <div style={{display: "flex"}} index={index}>
+                        {eachTodo.edit ? (<>
+                        <input type="text" value={todoItemNew} onChange={(e) => setTodoItemNew(e.target.value)}></input> 
+                        <button onClick={() => editTaskClick(index)}>Final</button></>)
+                        : (<>
                         <div>{eachTodo.label}</div>
                         <input type="checkbox" onChange={() => handleCheckTask(index)} checked={eachTodo.checked}></input>
-                        <button onClick={() => deleteTask(index)}>Delete</button>
+                        <button onClick={() => editTask(index)}>Edit</button>
+                        <button onClick={() => deleteTask(index)}>Delete</button></>)}
                     </div>
                 )
             })}</div>
