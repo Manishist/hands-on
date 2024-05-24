@@ -17,7 +17,26 @@ const TodoList = ({tasks, setTasks, setTasksFinished, tasksFinished}) => {
         }
         setTasks(updatedTasks);
     }
-
+    const upTask = (index) => {
+        if(index > 0){
+            const upPriority = [...tasks]
+            const tempEle = upPriority[index]
+            upPriority[index] = upPriority[index - 1]
+            upPriority[index - 1] = tempEle;
+            setTasks(upPriority)
+        }
+        console.log("up")
+    }
+    const downTask = (index) => {
+        if(index < tasks.length-1){
+            const downPriority = [...tasks]
+            const tempEle = downPriority[index]
+            downPriority[index] = downPriority[index + 1]
+            downPriority[index + 1] = tempEle;
+            setTasks(downPriority)
+        }
+        console.log("Down", tasks.length)
+    }
     const deleteTask = (index) => {
         setTasks(tasks.filter(item => item.label !== tasks[index].label))
     }
@@ -49,13 +68,15 @@ const TodoList = ({tasks, setTasks, setTasksFinished, tasksFinished}) => {
                 return (
                     <div style={{display: "flex"}} index={index}>
                         {eachTodo.edit ? (<>
-                        <input type="text" value={todoItemNew} onChange={(e) => setTodoItemNew(e.target.value)}></input> 
+                        <input type="text" value={todoItemNew} placeholder={eachTodo.label} onChange={(e) => setTodoItemNew(e.target.value)}></input> 
                         <button onClick={() => editTaskClick(index)}>Final</button></>)
                         : (<>
                         <div>{eachTodo.label}</div>
                         <input type="checkbox" onChange={() => handleCheckTask(index)} checked={eachTodo.checked}></input>
                         <button onClick={() => editTask(index)}>Edit</button>
-                        <button onClick={() => deleteTask(index)}>Delete</button></>)}
+                        <button onClick={() => deleteTask(index)}>Delete</button>
+                        <button onClick={() => upTask(index)}>Up</button>
+                        <button onClick={() => downTask(index)}>Down</button></>)}
                     </div>
                 )
             })}</div>
