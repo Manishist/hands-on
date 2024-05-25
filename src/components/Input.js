@@ -1,6 +1,11 @@
-import { useState } from "react"
+import { useContext } from "react"
+import { TodoContext } from "../App";
 
-const Input = ({tasks, setTasks, setTodoItem, todoItem}) => {
+const Input = () => {
+
+    const context = useContext(TodoContext)
+
+    const {tasks, setTasks, setTodoItem, todoItem} = context
 
     const AddTodo = () => {
         setTasks([...tasks, {label: todoItem, checked: false, edit: false}]);

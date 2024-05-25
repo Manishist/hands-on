@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { TodoContext } from "../App";
 
-const TodoList = ({tasks, setTasks, setTasksFinished, tasksFinished}) => {
+const TodoList = () => {
+
+    var {tasks, setTasks, setTasksFinished, tasksFinished} = useContext(TodoContext)
     const [tempCompArr, setTempCompArr] = useState([])
     const [todoItemNew, setTodoItemNew] = useState("")
 

@@ -1,28 +1,39 @@
 
 import './App.css';
-import { useState } from "react"
+import { createContext, useState } from "react"
 import Input from './components/Input';
 import TodoList from './components/TodoList';
 import CompletedTodo from './components/CompletedTodo';
 
-function App() {
+export const TodoContext = createContext();
 
+export const TodoContextProvider = ({children}) => {
   const [tasks, setTasks] = useState([])
   const [tasksFinished, setTasksFinished] = useState([])
   const [todoItem, setTodoItem] = useState("")
 
   return (
-    <div style={{position: "absolute", right: "50%", marginTop: "30px"}}>
-      <div style={{marginTop: "30px"}}>      
-        <Input tasks={tasks} setTasks={setTasks} todoItem={todoItem} setTodoItem={setTodoItem}/>
+    <TodoContext.Provider value={{tasks, setTasks, tasksFinished, setTasksFinished, todoItem, setTodoItem}}>
+      {children}
+    </TodoContext.Provider>
+  )
+}
+
+function App() {
+  return (
+    <TodoContextProvider>
+      <div style={{position: "absolute", right: "50%", marginTop: "30px"}}>
+        <div style={{marginTop: "30px"}}>      
+          <Input/>
+        </div>
+        <div style={{marginTop: "30px"}}>      
+          <TodoList/>
+        </div>
+        <div style={{marginTop: "30px"}}>      
+          <CompletedTodo/>
+        </div>
       </div>
-      <div style={{marginTop: "30px"}}>      
-        <TodoList tasks={tasks} setTasks={setTasks} setTasksFinished={setTasksFinished} tasksFinished={tasksFinished}/>
-      </div>
-      <div style={{marginTop: "30px"}}>      
-        <CompletedTodo tasks={tasks} setTasks={setTasks} tasksFinished={tasksFinished} setTasksFinished={setTasksFinished}/>
-      </div>
-    </div>
+    </TodoContextProvider>
   )
 }
 

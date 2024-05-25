@@ -1,4 +1,9 @@
-const CompletedTodo = ({tasksFinished, setTasks, tasks}) => {
+import { useContext } from "react"
+import { TodoContext } from "../App"
+
+const CompletedTodo = () => {
+
+    const {tasksFinished, setTasks, tasks} = useContext(TodoContext)
 
     const undoTask = (index) => {
         setTasks([...tasks, {label: tasksFinished[index], checked: false, edit: false}])
